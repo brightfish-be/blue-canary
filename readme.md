@@ -1,3 +1,3 @@
-# Blue canary aggregator
+# Blue Canary
 
-Lumen-based aggregator for Blue Canary, monitoring and metrics collection server.
+Lumen-based aggregator for Blue Canary, monitoring and metrics collection server
