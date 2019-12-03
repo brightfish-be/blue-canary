@@ -1,0 +1,43 @@
+{
+  "name": "brightfish/blue-canary-aggregator",
+  "description": "Lumen-based aggregator for Blue Canary, monitoring and metrics collection server",
+  "keywords": [
+    "lumen",
+    "monitoring",
+    "metrics"
+  ],
+  "license": "GPL-3.0",
+  "type": "project",
+  "require": {
+    "php": "^7.3",
+    "ext-pdo": "*",
+    "ext-json": "*",
+    "laravel/lumen-framework": "^6.0"
+  },
+  "require-dev": {
+    "fzaninotto/faker": "^1.4",
+    "phpunit/phpunit": "^8.0",
+    "mockery/mockery": "^1.0"
+  },
+  "autoload": {
+    "classmap": [
+      "database/seeds",
+      "database/factories"
+    ],
+    "psr-4": {
+      "App\\": "app/"
+    }
+  },
+  "autoload-dev": {
+    "classmap": [
+      "tests/"
+    ]
+  },
+  "config": {
+    "preferred-install": "dist",
+    "sort-packages": true,
+    "optimize-autoloader": true
+  },
+  "minimum-stability": "dev",
+  "prefer-stable": true
+}

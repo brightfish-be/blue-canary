@@ -1,0 +1,7 @@
+.git
+.idea
+storage/framework/**/*
+storage/clockwork/**
+storage/logs/**
+tests
+vendor
