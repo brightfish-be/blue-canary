@@ -25,13 +25,13 @@ class Event
 
     /**
      * Connection to the database.
-     * @var DatabaseManager $db
+     * @var DatabaseManager
      */
     protected $db;
 
     /**
      * The counter id this event is for.
-     * @var string $counterId
+     * @var string
      */
     protected $counterId = '';
 
@@ -103,7 +103,6 @@ class Event
             ? (int)$this->db->getPdo()->lastInsertId()
             : 0;
     }
-
 
     /**
      * Check if we have the minimal data point info.

@@ -27,7 +27,7 @@ class MetricFactory
 
     /** @var array */
     const VALUE_TYPES = [
-        'double', 'float', 'integer',
+        'float', 'int',
     ];
 
     /** @var DatabaseManager $db Connection to the database */
@@ -90,7 +90,7 @@ class MetricFactory
         return [
             'event_id' => $eventId,
             'key' => $metric['key'],
-            'value' => (double)$metric['value'],
+            'value' => (float)$metric['value'],
             'type' => $metric['type'],
             'unit' => $metric['unit'] ?: null,
             'created_at' => $dateTime,
