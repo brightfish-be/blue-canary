@@ -14,20 +14,20 @@ RUN set -xe \
 \
 # Set the container time and date
     && apk add --no-cache tzdata \
-    && cp /usr/share/zoneinfo/$APP_TIMEZONE /etc/localtime \
+    && ln -sf /usr/share/zoneinfo/$APP_TIMEZONE /etc/localtime \
     && echo $APP_TIMEZONE > /etc/timezone \
 \
 # Run-time packages
     && apk add --no-cache \
         libzip-dev \
-\		
+\
 # Compile modules using available cores
     && docker-php-ext-configure zip --with-libzip \
     && docker-php-ext-install -j${NPROC} pdo_mysql opcache zip \
     && rm -rf /tmp/* /var/cache/apk/*
 
 # PHP configuration
-COPY ./install/php-${APP_ENV}.ini /usr/local/etc/php/php.ini
+COPY ./install/php-${APP_ENV:-production}.ini /usr/local/etc/php/php.ini
 
 # Install composer
 COPY ./install/composer.sh /

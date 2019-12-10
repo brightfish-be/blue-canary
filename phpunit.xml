@@ -22,9 +22,6 @@
         <env name="APP_ENV" value="testing"/>
         <env name="CACHE_DRIVER" value="array"/>
         <env name="QUEUE_CONNECTION" value="sync"/>
-        <env name="DB_HOST" value="127.0.0.1"/>
-        <env name="DB_DATABASE" value="blue_canary_test"/>
-        <env name="DB_USERNAME" value=""/>
-        <env name="DB_PASSWORD" value=""/>
+        <env name="APP_KEY" value="MgJB9GedxhEn6JcdqohfnJDdLVXYtOsq"/>
     </php>
 </phpunit>
