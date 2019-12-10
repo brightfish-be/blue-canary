@@ -68,8 +68,8 @@ class EventController extends Controller
     protected function counterExists(int $appId, string $name): int
     {
         $counter = app('db')->selectOne(
-            'select id from counters where app_id = :uuid and name = :name',
-            ['uuid' => $appId, 'name' => $name]
+            'select id from counters where app_id = :id and name = :name',
+            ['id' => $appId, 'name' => $name]
         );
 
         return $counter ? $counter->id : 0;

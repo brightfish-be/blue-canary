@@ -2,11 +2,10 @@
 
 use Laravel\Lumen\Routing\Router;
 
-/** @var string $version */
-app('router')->group(['prefix' => $version], function (Router $router) {
+app('router')->group(['prefix' => 'v1'], function (Router $router) {
 
-    $appRe = '[a-z0-9-]{36}';
-    $ctrRe = '[a-z0-9\-_.]{6,255}';
+    $appRe = config('settings.app.uuid_validation');
+    $ctrRe = config('settings.counter.name_validation');
 
     $router->addRoute(['GET', 'POST'], "event/{appUuid:$appRe}/{counter:$ctrRe}", 'EventController@store');
 

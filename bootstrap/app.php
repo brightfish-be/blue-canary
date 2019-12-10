@@ -21,7 +21,7 @@ $app = new Laravel\Lumen\Application(
     dirname(__DIR__)
 );
 
-$app->configure('canary');
+$app->configure('settings');
 
 
 /*
@@ -88,9 +88,8 @@ $app->router->group([
     'prefix' => '/api/',
     'namespace' => 'App\Http\Controllers',
 ], function () use ($app) {
-    $version = $app['config']->get('canary.api_version');
     /** @noinspection PhpIncludeInspection */
-    require $app->basePath("/routes/api-$version.php");
+    require $app->basePath('/routes/api.php');
 });
 
 return $app;

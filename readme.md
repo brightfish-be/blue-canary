@@ -1,3 +1,7 @@
-# Blue Canary
+# Blue Canary Aggregator
 
-Lumen-based aggregator for Blue Canary, monitoring and metrics collection server
+Lumen-based aggregator for [Blue Canary](https://github.com/brightfish-be/blue-canary-dashboard), 
+monitoring and metrics collection server.
+
+## Documentation
+See [Blue Canary Dashboard](https://github.com/brightfish-be/blue-canary-dashboard).
