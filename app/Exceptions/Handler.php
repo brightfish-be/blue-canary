@@ -6,16 +6,12 @@ use App\Http\Controllers\Controller;
 use Exception;
 use Illuminate\Auth\Access\AuthorizationException;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
-use Illuminate\Http\Request;
 use Illuminate\Validation\ValidationException;
 use Laravel\Lumen\Exceptions\Handler as ExceptionHandler;
-use PDOException;
-use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\HttpException;
-use Symfony\Component\HttpKernel\Exception\MethodNotAllowedHttpException;
 
 /**
- * Handle thrown exception
+ * Handle thrown exception.
  *
  * @copyright 2019 Brightfish
  * @author Arnaud Coolsaet <a.coolsaet@brightfish.be>
@@ -53,9 +49,8 @@ class Handler extends ExceptionHandler
         if (app()->environment('production')) {
             $content = $e->getMessage();
         } else {
-            $content =
-                $e->getMessage() . PHP_EOL
-                . $e->getFile() . ' ('. $e->getLine() . ')' . PHP_EOL
+            $content = $e->getMessage() . PHP_EOL
+                . $e->getFile() . ' (' . $e->getLine() . ')' . PHP_EOL
                 . $e->getTraceAsString();
         }
 

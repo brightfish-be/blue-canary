@@ -5,12 +5,10 @@ namespace App\Http\Controllers;
 use Laravel\Lumen\Routing\Controller as BaseController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 /**
- * Base aggregator controller
+ * Base aggregator controller.
  *
- * @package App\Http\Controllers
  * @copyright 2019 Brightfish
  * @author Arnaud Coolsaet <a.coolsaet@brightfish.be>
  */

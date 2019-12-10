@@ -23,7 +23,6 @@ $app = new Laravel\Lumen\Application(
 
 $app->configure('settings');
 
-
 /*
 |--------------------------------------------------------------------------
 | Register Container Bindings

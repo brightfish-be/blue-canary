@@ -3,12 +3,11 @@
 namespace App\Exceptions;
 
 /**
- * Metric insert problems
+ * Metric related problems.
  *
  * @copyright 2019 Brightfish
  * @author Arnaud Coolsaet <a.coolsaet@brightfish.be>
  */
 class MetricException extends BlueCanaryException
 {
-
 }

@@ -7,7 +7,7 @@ use App\MetricFactory;
 use Illuminate\Support\ServiceProvider;
 
 /**
- * Core service providers
+ * Core service providers.
  *
  * @copyright 2019 Brightfish
  * @author Arnaud Coolsaet <a.coolsaet@brightfish.be>
@@ -21,7 +21,7 @@ class AppServiceProvider extends ServiceProvider
     public function register()
     {
         $this->app->bind(Event::class, function () {
-           return new Event($this->app['db'], new MetricFactory($this->app['db']));
+            return new Event($this->app['db'], new MetricFactory($this->app['db']));
         });
     }
 }

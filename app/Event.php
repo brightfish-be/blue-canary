@@ -7,7 +7,7 @@ use Carbon\Carbon;
 use Illuminate\Database\DatabaseManager;
 
 /**
- * Data point entry
+ * Data point entry.
  *
  * @copyright 2019 Brightfish
  * @author Arnaud Coolsaet <a.coolsaet@brightfish.be>
@@ -24,12 +24,14 @@ class Event
     protected $metricFactory;
 
     /**
-     * @var DatabaseManager $db Connection to the database
+     * Connection to the database.
+     * @var DatabaseManager $db
      */
     protected $db;
 
     /**
-     * @var string $counterId The counter id this event is for
+     * The counter id this event is for.
+     * @var string $counterId
      */
     protected $counterId = '';
 

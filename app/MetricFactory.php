@@ -7,7 +7,7 @@ use Carbon\Carbon;
 use Illuminate\Database\DatabaseManager;
 
 /**
- * Metric generator
+ * Metric generator.
  *
  * @copyright 2019 Brightfish
  * @author Arnaud Coolsaet <a.coolsaet@brightfish.be>
@@ -22,12 +22,12 @@ class MetricFactory
         'type' => 'integer',
         'key' => '',
         'value' => 0,
-        'unit' => null
+        'unit' => null,
     ];
 
     /** @var array */
     const VALUE_TYPES = [
-        'double', 'float', 'integer'
+        'double', 'float', 'integer',
     ];
 
     /** @var DatabaseManager $db Connection to the database */
@@ -51,7 +51,7 @@ class MetricFactory
      */
     public function create(int $eventId, array $metrics, ?Carbon $createdAt = null): int
     {
-        $createdAt = ($createdAt ?? Carbon::now())->toDateTimeString() ;
+        $createdAt = ($createdAt ?? Carbon::now())->toDateTimeString();
 
         $metrics = array_map(function ($metric, $key) use ($eventId, $createdAt) {
             return $this->build($eventId, $createdAt, $metric, $key);
@@ -93,7 +93,7 @@ class MetricFactory
             'value' => (double)$metric['value'],
             'type' => $metric['type'],
             'unit' => $metric['unit'] ?: null,
-            'created_at' => $dateTime
+            'created_at' => $dateTime,
         ];
     }
 
