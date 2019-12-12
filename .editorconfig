@@ -13,3 +13,10 @@ trim_trailing_whitespace = false
 
 [*.{yml,yaml}]
 indent_size = 2
+
+[*.php]
+ij_php_comma_after_last_array_element = true
+ij_php_space_after_type_cast = false
+ij_php_concat_spaces = true
+ij_php_space_after_unary_not = false
+ij_php_import_sorting = alphabetic

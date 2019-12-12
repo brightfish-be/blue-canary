@@ -1,6 +1,9 @@
 .git
 .idea
-storage/framework/**/*
+storage/framework/cache/*
+storage/framework/sessions/*
+storage/framework/testing/*
+storage/framework/views/*
 storage/clockwork/**
 storage/logs/**
 tests
