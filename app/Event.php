@@ -36,6 +36,12 @@ class Event
     protected $counterId = '';
 
     /**
+     * Data for this event.
+     * @var array
+     */
+    protected $attributes = [];
+
+    /**
      * Event constructor.
      * @param DatabaseManager $databaseManager
      * @param MetricFactory $metricFactory
@@ -49,57 +55,75 @@ class Event
 
     /**
      * Set the counter id this event is for.
-     * @param string $counterId
-     * @return void
+     * @param int $counterId
+     * @return Event
      */
-    public function setCounterId(string $counterId): void
+    public function setCounterId(int $counterId): Event
     {
         $this->counterId = $counterId;
+
+        return $this;
     }
 
     /**
-     * Persist an event from an array.
-     * @param array $body
-     * @return int
+     * Build the event attributes from an array.
+     * @param array $data
+     * @return Event
      * @throws EventException
      */
-    public function fromArray(array $body): int
+    public function create(array $data): Event
     {
         $this->checkCounterId();
 
         $createdAt = Carbon::now();
 
-        $eventRaw = [
+        $this->attributes = [
             'counter_id' => $this->counterId,
-            'client_id' => $body['client_id'] ?? null,
-            'client_name' => $body['client_name'] ?? null,
-            'status_code' => (int)($body['status_code'] ?? 0),
-            'status_remark' => $body['status_remark'] ?? null,
-            'created_at' => $createdAt->toDateTimeString(),
-            'generated_at' => !empty($body['generated_at'])
-                ? Carbon::parse($body['generated_at'])->toDateTimeString()
-                : null,
+            'client_id' => $data['client_id'] ?? null,
+            'client_name' => $data['client_name'] ?? null,
+            'status_code' => (int)($data['status_code'] ?? 0),
+            'status_remark' => $data['status_remark'] ?? null,
+            'created_at' => $createdAt,
+            'generated_at' => !empty($data['generated_at']) ? Carbon::parse($data['generated_at']) : null,
         ];
 
-        if (!($eventId = $this->insertEvent($eventRaw))) {
-            return 0;
-        }
+        return $this;
+    }
 
-        if (empty($body['metrics'])) {
-            return 1;
-        }
+    /**
+     * Create and persist metrics for an event.
+     * @param int $eventId
+     * @param array $metrics
+     * @return int
+     */
+    public function addMetrics(int $eventId, array $metrics): int
+    {
+        $metrics = $this->metricFactory->create($eventId, $metrics, $this->attributes['created_at']);
 
-        return $this->metricFactory->create($eventId, $body['metrics'], $createdAt);
+        return $this->metricFactory->persist($metrics);
+    }
+
+    /**
+     * Return the event's data.
+     * @return array
+     */
+    public function getAttributes(): array
+    {
+        return $this->attributes;
     }
 
     /**
      * Persist an event and return its primary id.
-     * @param array $data
      * @return int
+     * @throws EventException
      */
-    protected function insertEvent(array $data): int
+    public function save(): int
     {
-        return $this->db->table(static::TABLE)->insert($data)
+        if (!$this->attributes) {
+            throw new EventException('There is no data to save to this event.');
+        }
+
+        return $this->db->table(static::TABLE)->insert($this->attributes)
             ? (int)$this->db->getPdo()->lastInsertId()
             : 0;
     }

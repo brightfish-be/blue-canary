@@ -10,3 +10,6 @@ install:
 branches:
   only:
     - master
+
+script:
+  - composer test

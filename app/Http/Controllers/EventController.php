@@ -38,9 +38,9 @@ class EventController extends Controller
             throw new EventException('There is not data for this event.', 404);
         }
 
-        $event->setCounterId($counterId);
+        $eventId = $event->setCounterId($counterId)->create($data)->save();
 
-        $result = $event->fromArray($data);
+        $result = $eventId ? $event->addMetrics($eventId, $data['metrics'] ?? []) : 0;
 
         return $request->header('Accept') === 'text/plain'
             ? $this->respondWithText((string) $result)

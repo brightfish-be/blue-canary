@@ -47,32 +47,29 @@ class MetricFactory
      * @param int $eventId
      * @param array $metrics
      * @param Carbon|null $createdAt
-     * @return int
+     * @return array
      */
-    public function create(int $eventId, array $metrics, ?Carbon $createdAt = null): int
+    public function create(int $eventId, array $metrics, ?Carbon $createdAt = null): array
     {
         $createdAt = ($createdAt ?? Carbon::now())->toDateTimeString();
 
-        $metrics = array_map(function ($metric, $key) use ($eventId, $createdAt) {
-            return $this->build($eventId, $createdAt, $metric, $key);
-        }, $metrics, array_keys($metrics));
+        $metrics = array_map(function ($metric) use ($eventId, $createdAt) {
+            return $this->createOne($eventId, $metric, $createdAt);
+        }, $metrics);
 
-        return $this->persist(array_values($metrics));
+        return $metrics;
     }
 
     /**
      * Check the raw metric validity and return the raw metric.
      * @param int $eventId
+     * @param array $metric
      * @param string $dateTime
-     * @param mixed $metric
-     * @param string|null $key
      * @return array
      * @throws MetricException
      */
-    protected function build(int $eventId, string $dateTime, $metric, ?string $key = null): array
+    public function createOne(int $eventId, array $metric, string $dateTime): array
     {
-        $metric = is_array($metric) ? $metric : ['key' => $key, 'value' => $metric];
-
         $metric = array_merge(static::DEFAULT_DATA, $metric);
 
         if (!is_numeric($metric['value'])) {
@@ -102,7 +99,7 @@ class MetricFactory
      * @param array $metrics
      * @return int
      */
-    protected function persist(array $metrics): int
+    public function persist(array $metrics): int
     {
         return (int)$this->db->table(self::TABLE)->insert($metrics);
     }
