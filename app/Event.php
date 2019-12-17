@@ -58,7 +58,7 @@ class Event
      * @param int $counterId
      * @return Event
      */
-    public function setCounterId(int $counterId): Event
+    public function setCounterId(int $counterId): self
     {
         $this->counterId = $counterId;
 
@@ -71,7 +71,7 @@ class Event
      * @return Event
      * @throws EventException
      */
-    public function create(array $data): Event
+    public function create(array $data): self
     {
         $this->checkCounterId();
 
