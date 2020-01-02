@@ -8,3 +8,6 @@ monitoring and metrics collection server.
 
 ## Documentation
 See [Blue Canary Dashboard](https://github.com/brightfish-be/blue-canary-dashboard).
+
+## License
+GNU General Public License (GPL). Please see the license file for more information.
