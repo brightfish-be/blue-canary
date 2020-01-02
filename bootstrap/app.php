@@ -21,7 +21,8 @@ $app = new Laravel\Lumen\Application(
     dirname(__DIR__)
 );
 
-$app->configure('settings');
+$app->configure('database');
+$app->configure('canary/settings');
 
 /*
 |--------------------------------------------------------------------------
