@@ -84,7 +84,7 @@ class Event
             'status_code' => (int)($data['status_code'] ?? 0),
             'status_remark' => $data['status_remark'] ?? null,
             'created_at' => $createdAt,
-            'generated_at' => !empty($data['generated_at']) ? Carbon::parse($data['generated_at']) : null,
+            'generated_at' => !empty($data['generated_at']) ? Carbon::createFromTimestamp($data['generated_at']) : null,
         ];
 
         return $this;

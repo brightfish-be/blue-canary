@@ -19,7 +19,7 @@ class MetricFactory
 
     /** @var array */
     const DEFAULT_DATA = [
-        'type' => 'integer',
+        'type' => 'int',
         'key' => '',
         'value' => 0,
         'unit' => null,
@@ -53,9 +53,10 @@ class MetricFactory
     {
         $createdAt = ($createdAt ?? Carbon::now())->toDateTimeString();
 
-        $metrics = array_map(function ($metric) use ($eventId, $createdAt) {
+        $metrics = array_map(function ($metric, $key) use ($eventId, $createdAt) {
+            $metric = is_array($metric) ? $metric : ['key' => $key, 'value' => $metric];
             return $this->createOne($eventId, $metric, $createdAt);
-        }, $metrics);
+        }, $metrics, array_keys($metrics));
 
         return $metrics;
     }
