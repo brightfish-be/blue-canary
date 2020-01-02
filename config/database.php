@@ -49,7 +49,7 @@ return [
             'timezone' => env('DB_TIMEZONE', '+00:00'),
             'options' => array_filter([
                 PDO::MYSQL_ATTR_SSL_CA => env('MYSQL_ATTR_SSL_CA'),
-                PDO::MYSQL_ATTR_SSL_KEY => env('MYSQL_SSL_MODE') !== 'DISABLED'
+                PDO::MYSQL_ATTR_SSL_KEY => env('MYSQL_SSL_MODE') === 'REQUIRED'
                     ? '/etc/ssl/certs/ca-cert-Baltimore_CyberTrust_Root.pem'
                     : 0,
             ]),
