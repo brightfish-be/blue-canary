@@ -72,9 +72,9 @@ class ApplicationUnitTest extends TestCase
         $this->assertArrayHasKey('type', $metric);
     }
 
-    public function test_metric_missing_type_throws_exception()
+    public function test_metric_wrong_type_throws_exception()
     {
-        $raw = ['key' => 'test', 'value' => 234];
+        $raw = ['key' => 'test', 'value' => 234, 'type' => 'array'];
 
         $this->expectException(MetricException::class);
 
