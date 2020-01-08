@@ -55,6 +55,7 @@ class MetricFactory
 
         $metrics = array_map(function ($metric, $key) use ($eventId, $createdAt) {
             $metric = is_array($metric) ? $metric : ['key' => $key, 'value' => $metric];
+
             return $this->createOne($eventId, $metric, $createdAt);
         }, $metrics, array_keys($metrics));
 
