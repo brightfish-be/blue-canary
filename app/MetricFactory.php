@@ -19,7 +19,7 @@ class MetricFactory
 
     /** @var array */
     const DEFAULT_DATA = [
-        'type' => 'int',
+        'type' => 'float',
         'key' => '',
         'value' => 0,
         'unit' => null,

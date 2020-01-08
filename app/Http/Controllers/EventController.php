@@ -34,8 +34,10 @@ class EventController extends Controller
             throw new EventException('This counter does not exist.', 404);
         }
 
-        if (!($data = $request->all())) {
-            throw new EventException('There is not data for this event.', 404);
+        $data = $request->all() ?: $request->json()->all();
+
+        if (!$data) {
+            throw new EventException('There is no data for this event.', 404);
         }
 
         $eventId = $event->setCounterId($counterId)->create($data)->save();
