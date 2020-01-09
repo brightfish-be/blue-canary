@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Event;
 use App\Exceptions\EventException;
+use Carbon\Carbon;
+use Exception;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -23,6 +25,7 @@ class EventController extends Controller
      * @param string $counter
      * @return Response
      * @throws EventException
+     * @throws Exception
      */
     public function store(Event $event, Request $request, string $appUuid, string $counter): Response
     {
@@ -30,7 +33,9 @@ class EventController extends Controller
             throw new EventException('This application does not exist.', 404);
         }
 
-        if (!($counterId = $this->counterExists($appId, $counter))) {
+        $forceCreateCounter = $request->get('counter_create', true);
+
+        if (!($counterId = $this->counterExists($appId, $counter, $forceCreateCounter))) {
             throw new EventException('This counter does not exist.', 404);
         }
 
@@ -45,7 +50,7 @@ class EventController extends Controller
         $result = $eventId ? $event->addMetrics($eventId, $data['metrics'] ?? []) : 0;
 
         return $request->header('Accept') === 'text/plain'
-            ? $this->respondWithText((string) $result)
+            ? $this->respondWithText((string)$result)
             : $this->respond($result);
     }
 
@@ -65,14 +70,25 @@ class EventController extends Controller
      * Check if we have a counter for the given app uuid and counter name.
      * @param int $appId
      * @param string $name
+     * @param bool $create
      * @return int
+     * @throws Exception
      */
-    protected function counterExists(int $appId, string $name): int
+    protected function counterExists(int $appId, string $name, bool $create): int
     {
         $counter = app('db')->selectOne(
             'select id from counters where app_id = :id and name = :name',
             ['id' => $appId, 'name' => $name]
         );
+
+        if (!$counter && $create) {
+            return app('db')->table('counters')->insertGetId([
+                'name' => $name,
+                'app_id' => $appId,
+                'created_at' => $now = (new Carbon())->toDateTimeString(),
+                'updated_at' => $now,
+            ]);
+        }
 
         return $counter ? $counter->id : 0;
     }
