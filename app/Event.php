@@ -136,7 +136,7 @@ class Event
     protected function checkCounterId(): void
     {
         if (!$this->counterId) {
-            throw new EventException('A counter id is missing.');
+            throw new EventException('A counter id is missing.', 404);
         }
     }
 }

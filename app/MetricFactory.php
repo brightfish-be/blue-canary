@@ -74,16 +74,26 @@ class MetricFactory
     {
         $metric = array_merge(static::DEFAULT_DATA, $metric);
 
-        if (!is_numeric($metric['value'])) {
-            throw new MetricException('A metric can only be numeric.');
+        if (!$metric['key'] || strlen($metric['key']) > 255) {
+            throw new MetricException('The character count of a metric key should be between 1 and 255.', 500);
         }
 
-        if (!$metric['key'] || strlen($metric['key']) > 255) {
-            throw new MetricException('A metric key is missing or too long.');
-        }
+        $key = $metric['key'];
 
         if (!in_array($metric['type'], static::VALUE_TYPES)) {
-            throw new MetricException('The metric type is not correct.');
+            throw new MetricException("The data type for $key can only be 'int' or 'float'.", 500);
+        }
+
+        if (!is_numeric($metric['value'])) {
+            throw new MetricException("The value for $key is not numeric.", 500);
+        }
+
+        if (is_infinite((float)$metric['value'])) {
+            throw new MetricException("The value for $key is too long.", 500);
+        }
+
+        if (isset($metric['unit']) && strlen($metric['unit']) > 10) {
+            throw new MetricException("The unit notation for $key is longer than 10 characters.", 500);
         }
 
         return [
